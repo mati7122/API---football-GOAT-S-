@@ -4,7 +4,8 @@ require('dotenv').config();
 require('hbs');
 
 const ConnectionToDB = require('../database/connection');
-//Pull the function to connect to my Database MySQL
+//I bring the function to connect to my Database MySQL
+const User = require('./user');
 
 class Server {
     constructor() {
@@ -16,6 +17,7 @@ class Server {
         this.Middlewares();
         this.Routes();
         this.ConnectToDB();
+        this.SyncWithDatabase(); //sync with database
     }
 
     Middlewares() {
@@ -35,6 +37,10 @@ class Server {
         this.app.listen(this.PORT, () => {
             console.log('Running in port ', this.PORT);
         })
+    }
+
+    SyncWithDatabase() {
+        User.sync();
     }
 }
 
